@@ -11,8 +11,7 @@ libraryDependencies += "com.gilt" % "jerkson_2.11" % "0.6.9"
 libraryDependencies += "org.yaml" % "snakeyaml" % "1.17"
 libraryDependencies += "org.scalaj" % "scalaj-collection_2.11" % "1.6"
 
-libraryDependencies += "org.scalatest" %% "scalatest" % "2.2.1" % Test
-libraryDependencies += "org.testng" % "testng" % "6.8" % Test
+libraryDependencies += "com.github.biopet" %% "biopet-test-utils" % "0.1.0-SNAPSHOT" % Test
 
 useGpg := true
 
