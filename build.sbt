@@ -7,7 +7,7 @@ resolvers += Resolver.sonatypeRepo("snapshots")
 
 libraryDependencies += "com.github.biopet" %% "biopet-common-utils" % "0.1.0-SNAPSHOT" changing()
 libraryDependencies += "com.typesafe.play" %% "play-json" % "2.6.3"
-libraryDependencies += "com.gilt" % "jerkson_2.11" % "0.6.9"
+libraryDependencies += "com.gilt" %% "jerkson" % "0.6.9"
 libraryDependencies += "org.yaml" % "snakeyaml" % "1.17"
 libraryDependencies += "org.scalaj" % "scalaj-collection_2.11" % "1.6"
 
