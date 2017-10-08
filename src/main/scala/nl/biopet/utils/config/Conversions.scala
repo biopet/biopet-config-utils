@@ -1,5 +1,10 @@
 package nl.biopet.utils.config
 
+import java.io.{File, PrintWriter}
+
+import org.yaml.snakeyaml.Yaml
+import play.api.libs.json.Json
+
 import scala.collection.JavaConversions._
 
 object Conversions {
@@ -52,4 +57,16 @@ object Conversions {
       })
       .toMap
   }
+
+  lazy val yaml = new Yaml()
+
+  def mapToYaml(map: Map[String, Any]): String =
+    yaml.dump(yaml.load(Json.stringify(Config.mapToJson(map))))
+
+  def mapToYamlFile(map: Map[String, Any], outputFile: File): Unit = {
+    val writer = new PrintWriter(outputFile)
+    writer.println(mapToYaml(map))
+    writer.close()
+  }
+
 }
