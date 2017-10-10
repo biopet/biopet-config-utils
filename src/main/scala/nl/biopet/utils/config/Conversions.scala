@@ -8,6 +8,7 @@ import play.api.libs.json._
 import scala.collection.JavaConversions._
 
 object Conversions {
+
   /**
     * Merge 2 maps, when value is in a map in map1 and map2 the value calls recursively this function
     *
@@ -15,10 +16,10 @@ object Conversions {
     * @param map2 Backup for map1
     * @return merged map
     */
-  def mergeMaps(
-                 map1: Map[String, Any],
-                 map2: Map[String, Any],
-                 resolveConflict: (Any, Any, String) => Any = (m1, _, _) => m1): Map[String, Any] = {
+  def mergeMaps(map1: Map[String, Any],
+                map2: Map[String, Any],
+                resolveConflict: (Any, Any, String) => Any = (m1, _, _) => m1)
+    : Map[String, Any] = {
     (for (key <- map1.keySet.++(map2.keySet)) yield {
       if (!map2.contains(key)) key -> map1(key)
       else if (!map1.contains(key)) key -> map2(key)
@@ -26,7 +27,8 @@ object Conversions {
         map1(key) match {
           case m1: Map[_, _] =>
             map2(key) match {
-              case m2: Map[_, _] => key -> mergeMaps(any2map(m1), any2map(m2), resolveConflict)
+              case m2: Map[_, _] =>
+                key -> mergeMaps(any2map(m1), any2map(m2), resolveConflict)
               case _ => key -> map1(key)
             }
           case _ => key -> resolveConflict(map1(key), map2(key), key)
@@ -41,12 +43,14 @@ object Conversions {
     any match {
       case m: Map[_, _] => m.map(x => x._1.toString -> x._2)
       case m: java.util.LinkedHashMap[_, _] => nestedJavaHashMaptoScalaMap(m)
-      case _ => throw new IllegalStateException("Value '" + any + "' is not an Map")
+      case _ =>
+        throw new IllegalStateException("Value '" + any + "' is not an Map")
     }
   }
 
   /** Convert nested java hash map to scala hash map */
-  def nestedJavaHashMaptoScalaMap(input: java.util.LinkedHashMap[_, _]): Map[String, Any] = {
+  def nestedJavaHashMaptoScalaMap(
+      input: java.util.LinkedHashMap[_, _]): Map[String, Any] = {
     input
       .map(value => {
         value._2 match {
@@ -80,7 +84,8 @@ object Conversions {
       case j: JsValue => j
       case None => JsNull
       case Some(x) => anyToJson(x)
-      case m: Map[_, _] => mapToJson(m.map(m => m._1.toString -> anyToJson(m._2)))
+      case m: Map[_, _] =>
+        mapToJson(m.map(m => m._1.toString -> anyToJson(m._2)))
       case l: List[_] => JsArray(l.map(anyToJson))
       case l: Array[_] => JsArray(l.map(anyToJson))
       case b: Boolean => JsBoolean(b)
@@ -94,6 +99,5 @@ object Conversions {
       case _ => JsString(any.toString)
     }
   }
-
 
 }
