@@ -3,7 +3,7 @@ package nl.biopet.utils.config
 import java.io.File
 
 import com.codahale.jerkson.Json._
-import nl.biopet.utils.Logging
+import nl.biopet.utils.{Logging, conversions}
 import org.yaml.snakeyaml.Yaml
 import play.api.libs.json._
 
@@ -63,6 +63,6 @@ object Config extends Logging {
   }
 
   def fromMap(map: Map[String, Any]): Config = {
-    Config(Conversions.mapToJson(map))
+    Config(conversions.mapToJson(map))
   }
 }
